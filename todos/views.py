@@ -31,3 +31,16 @@ def add(request):
         return redirect('/todos')
     else:
         return render(request, 'add.html')
+
+## Appending RESTful functionality to the original todos app
+from rest_framework import generics
+from .serializers import TodoSerializer
+
+
+class TodoList(generics.ListCreateAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+class TodoListDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
